@@ -1,0 +1,66 @@
+name: pandora_toolbox
+description: A suite of Pandora inspection tools.
+homepage: 'https://epimetheusmusicplayer.github.io/toolbox'
+
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.12.0-0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  provider: ^5.0.0-nullsafety.2
+  bloc: ^7.0.0-nullsafety.0
+  flutter_bloc: ^7.0.0-nullsafety.0
+  http:
+    git:
+      url: 'https://github.com/dart-lang/http'
+      ref: 'd473635f0dbb72936664696162127c2209986356'
+  batcher:
+    git:
+      url: 'git://github.com/hacker1024/batcher.dart.git'
+      ref: '45a790db50e9772740084349905d0a97a06a9666'
+  universal_html: ^1.2.3
+  source_maps: ^0.10.10-nullsafety.3
+  jsparser: ^2.0.1
+  file: ^5.2.1 # Waiting on https://github.com/google/file.dart/issues/175
+  archive:
+    git:
+      url: 'https://github.com/brendan-duncan/archive'
+      ref: '2ea0307f401b4d762c31b5e344f4bd0d9e82bc7c'
+  url_launcher: ^6.0.0-nullsafety.1
+  flutter_highlight: ^0.6.0
+  flutter_markdown: ^0.5.2
+  flex_color_scheme: ^1.3.0
+
+dev_dependencies:
+  pedantic: 1.10.0-nullsafety.3
+
+flutter:
+  uses-material-design: true
+  assets:
+    - 'README.md'
+  fonts:
+    - family: 'JetBrains Mono'
+      fonts:
+        - asset: 'assets/fonts/JetBrainsMono/JetBrainsMono-Regular.ttf'
+#        - asset: 'assets/fonts/JetBrainsMono/JetBrainsMono-Italic.ttf'
+#          style: italic
+#        - asset: 'assets/fonts/JetBrainsMono/JetBrainsMono-Medium.ttf'
+#          weight: 500
+#        - asset: 'assets/fonts/JetBrainsMono/JetBrainsMono-Medium-Italic.ttf'
+#          weight: 500
+#          style: italic
+#        - asset: 'assets/fonts/JetBrainsMono/JetBrainsMono-Bold.ttf'
+#          weight: 700
+#        - asset: 'assets/fonts/JetBrainsMono/JetBrainsMono-Bold-Italic.ttf'
+#          weight: 700
+#          style: italic
+#        - asset: 'assets/fonts/JetBrainsMono/JetBrainsMono-ExtraBold.ttf'
+#          weight: 900
+#        - asset: 'assets/fonts/JetBrainsMono/JetBrainsMono-ExtraBold-Italic.ttf'
+#          weight: 900
+#          style: italic
