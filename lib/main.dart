@@ -46,6 +46,7 @@ class App extends StatelessWidget {
           ),
         ],
         child: MaterialApp(
+          title: 'Pandora Toolbox',
           theme: FlexColorScheme.light(
             colors: customFlexScheme.light,
             appBarElevation: 4,
