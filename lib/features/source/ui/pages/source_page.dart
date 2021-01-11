@@ -31,8 +31,7 @@ class SourcePage extends StatelessWidget {
       },
       bodyBuilder: (_, drawerExpanded) {
         return Padding(
-          padding:
-              drawerExpanded ? const EdgeInsets.only(left: 8) : EdgeInsets.zero,
+          padding: const EdgeInsets.only(left: 8),
           child: Stack(
             children: [
               Positioned.fill(
