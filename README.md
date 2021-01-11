@@ -28,7 +28,7 @@ Pandora Toolbox uses the following methods to provide tools:
 All data is dynamically downloaded directly from Pandora; none of it is
 hard-coded. The only connections that are made to anything other than Pandora to
 use the tools are the occasional connections through
-a [CORS stripper proxy](https://github.com/Freeboard/thingproxy).
+a [CORS stripper proxy](https://elements.heroku.com/buttons/gcollazo/easy-cors-proxy).
 
 ## Can I trust Pandora Toolbox with my Pandora credentials?
 

@@ -17,8 +17,7 @@ Future<Manifest> fetchManifest(Client client) async {
 
     // Download the website HTML.
     // Always use the CORS proxy here as it's also a good geo-block bypass.
-    final pandoraWebsiteResponse =
-        await client.get('${corsUrlPrefix}${pandoraWebUrl}');
+    final pandoraWebsiteResponse = await client.get(pandoraWebCorsUrl);
     final pandoraWebsiteBody = pandoraWebsiteResponse.body;
     final pandoraWebsiteHtml = parseHtmlDocument(pandoraWebsiteResponse.body);
 
