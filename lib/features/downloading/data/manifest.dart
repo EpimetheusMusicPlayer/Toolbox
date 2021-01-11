@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
@@ -26,6 +27,13 @@ Future<Manifest> fetchManifest(Client client) async {
             .firstMatch(pandoraWebsiteBody)
             ?.group(1) ??
         '?.???.?';
+
+    final config = jsonDecode(
+      RegExp(r'var\s+configJson\s*=\s*(\{".*"\})')
+              .firstMatch(pandoraWebsiteBody)
+              ?.group(1) ??
+          '{}',
+    );
 
     // Find root JS files, and add them to the manifest map.
     // Also find the manifest script URL for later.
@@ -99,7 +107,7 @@ Future<Manifest> fetchManifest(Client client) async {
       manifestMap[sourceNames[index]] = sourceSuffixes[index];
     }
 
-    return Manifest(version, manifestMap);
+    return Manifest(version, config, manifestMap);
   } on SocketException {
     throw const DownloadingNetworkException();
   }

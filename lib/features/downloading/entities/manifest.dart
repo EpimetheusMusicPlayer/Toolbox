@@ -6,10 +6,13 @@ class Manifest {
   /// The version of the Pandora Web app.
   final String appVersion;
 
+  /// The current Web app config.
+  final Map<String, dynamic> config;
+
   /// A map of JavaScript module names to suffixes.
   final Map<String, String> _moduleData;
 
-  const Manifest(this.appVersion, this._moduleData);
+  const Manifest(this.appVersion, this.config, this._moduleData);
 
   int get moduleCount => _moduleData.length;
 
@@ -28,9 +31,7 @@ class Manifest {
       _moduleData.keys.map((moduleName) => getModuleJsUri(moduleName));
 
   @override
-  String toString() {
-    return 'Manifest{_moduleData: $_moduleData}';
-  }
+  String toString() => 'Manifest{appVersion: $appVersion}';
 
   @override
   bool operator ==(Object other) =>
@@ -38,8 +39,10 @@ class Manifest {
       other is Manifest &&
           runtimeType == other.runtimeType &&
           appVersion == other.appVersion &&
+          config == other.config &&
           _moduleData == other._moduleData;
 
   @override
-  int get hashCode => appVersion.hashCode ^ _moduleData.hashCode;
+  int get hashCode =>
+      appVersion.hashCode ^ config.hashCode ^ _moduleData.hashCode;
 }

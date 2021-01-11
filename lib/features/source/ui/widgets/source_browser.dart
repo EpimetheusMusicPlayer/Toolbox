@@ -43,7 +43,7 @@ class _SourceBrowserState extends State<SourceBrowser> {
               ),
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.all(16),
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: FileSourceDisplay(
                     selectedNotifier: _selectedNotifier,
                   ),
@@ -60,7 +60,7 @@ class _SourceBrowserState extends State<SourceBrowser> {
                   children: [
                     Positioned.fill(
                       child: Padding(
-                        padding: const EdgeInsets.all(8),
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
                         child: FileSourceDisplay(
                           selectedNotifier: _selectedNotifier,
                         ),

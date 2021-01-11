@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart';
 import 'package:pandora_toolbox/core/bloc/manifest/manifest_bloc.dart';
 import 'package:pandora_toolbox/core/widgets/app_page_transitions_builder.dart';
+import 'package:pandora_toolbox/features/config/ui/pages/config_page.dart';
 import 'package:pandora_toolbox/features/endpoints/bloc/endpoint/endpoint_bloc.dart';
 import 'package:pandora_toolbox/features/endpoints/ui/pages/endpoint_page.dart';
 import 'package:pandora_toolbox/features/home/ui/pages/home_page.dart';
@@ -62,6 +63,7 @@ class App extends StatelessWidget {
           routes: {
             HomePage.path: (_) => const HomePage(),
             EndpointPage.path: (_) => const EndpointPage(),
+            ConfigPage.path: (_) => const ConfigPage(),
             SourcePage.path: (_) => const SourcePage(),
           },
           debugShowCheckedModeBanner: false,

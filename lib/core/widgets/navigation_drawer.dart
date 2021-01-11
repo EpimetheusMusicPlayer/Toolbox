@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pandora_toolbox/core/bloc/manifest/manifest_bloc.dart';
+import 'package:pandora_toolbox/features/config/ui/pages/config_page.dart';
 import 'package:pandora_toolbox/features/endpoints/ui/pages/endpoint_page.dart';
 import 'package:pandora_toolbox/features/home/ui/pages/home_page.dart';
 import 'package:pandora_toolbox/features/source/ui/pages/source_page.dart';
@@ -16,6 +17,11 @@ class NavigationDrawer extends StatelessWidget {
       iconData: Icons.list_outlined,
       label: 'Endpoint list',
       path: EndpointPage.path,
+    ),
+    DrawerItem(
+      iconData: Icons.settings,
+      label: 'Configuration',
+      path: ConfigPage.path,
     ),
     DrawerItem(
       iconData: Icons.code_outlined,
