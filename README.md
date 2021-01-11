@@ -1,7 +1,7 @@
 # Pandora Toolbox
 
 Welcome to Pandora Toolbox! If you're not in the web app already, it can be
-accessed [here](https://epimetheusmusicplayer.github.io/toolbox).
+accessed [here](https://toolbox.epimetheus.tk).
 
 ## Introduction
 
