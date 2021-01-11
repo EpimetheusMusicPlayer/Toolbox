@@ -12,6 +12,7 @@ access to Pandora APIs.
 
 - A dynamically generated API endpoint list (with options to export to CSV,
   JSON, and Markdown)
+- A Web app configuration viewer
 - A source code browser (with downloading support including helpful patches)
 
 ## Upcoming features
