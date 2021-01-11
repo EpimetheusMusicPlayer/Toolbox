@@ -26,12 +26,11 @@ jobs:
       - name: Publish web release
         run: |
           cd build/web
-          echo "toolbox.epimetheus.tk" > CNAME
           git init
           git config user.name "Epimetheus CD"
           git config user.email "cd@epimetheus.tk"
           git remote add secure-origin https://${{ secrets.ACCESS_TOKEN }}@github.com/EpimetheusMusicPlayer/Toolbox.git
-          git branch -M www
+          git checkout -b www
           git add .
           git commit -m "Built latest web release off the master branch"
           git push --force secure-origin www
