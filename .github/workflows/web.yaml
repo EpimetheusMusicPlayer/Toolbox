@@ -1,0 +1,43 @@
+name: Web CD
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: 'recursive'
+      - uses: subosito/flutter-action@v1
+        with:
+          channel: 'dev'
+
+      - run: flutter --suppress-analytics config --no-analytics
+      - run: flutter config --enable-web
+      - run: flutter pub get
+
+      - name: Build web release
+        run: flutter build web --web-renderer canvaskit --no-sound-null-safety
+
+      - name: Publish web release
+        run: |
+          cd build/web
+          echo "toolbox.epimetheus.tk" > CNAME
+          git init
+          git config user.name "Epimetheus CD"
+          git config user.email "cd@epimetheus.tk"
+          git remote add secure-origin https://${{ secrets.ACCESS_TOKEN }}@github.com/EpimetheusMusicPlayer/Toolbox.git
+          git branch -M www
+          git add .
+          git commit -m "Built latest web release off the master branch"
+          git push --force secure-origin www
+          cd -
+      - name: Purge Cloudflare caches
+        uses: jakejarvis/cloudflare-purge-action@master
+        env:
+          CLOUDFLARE_ZONE: ${{ secrets.CLOUDFLARE_ZONE }}
+          CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_TOKEN }}
