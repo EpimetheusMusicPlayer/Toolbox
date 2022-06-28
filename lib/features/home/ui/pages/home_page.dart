@@ -57,7 +57,7 @@ class _HomePageState extends State<HomePage> {
                     .copyWith(textScaleFactor: 1.25),
                 padding: EdgeInsets.all(32),
                 onTapLink: (_, href, __) {
-                  launch(href);
+                  launchUrl(Uri.parse(href!));
                 },
               );
             },

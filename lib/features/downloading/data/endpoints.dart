@@ -23,7 +23,7 @@ Future<List<EndpointCategory>> fetchEndpoints(
     final apiActionsSource = webAppModuleSources!
         .firstWhere((sourceFile) => sourceFile.path == endpointSourceFilePath)
         .contents;
-    return parseEndpoints(apiActionsSource);
+    return parseEndpoints(apiActionsSource!);
   } on SocketException {
     throw const DownloadingNetworkException();
   }
@@ -37,9 +37,15 @@ List<EndpointCategory> parseEndpoints(String endpointSourceFileContents) {
   final currentCategoryEndpoints = <Endpoint>[];
 
   var isReadingEndpointMap = false;
-  for (final line in sourceLines) {
+  for (var i = 0; i < sourceLines.length; ++i) {
+    final line = sourceLines[i];
     if (isReadingEndpointMap) {
       if (line.isNotEmpty) {
+        if (line.startsWith('}')) {
+          isReadingEndpointMap = false;
+          break;
+        }
+
         final trimmedLine = line.trim();
 
         if (trimmedLine.startsWith('//')) {
@@ -54,16 +60,15 @@ List<EndpointCategory> parseEndpoints(String endpointSourceFileContents) {
           continue;
         }
 
-        if (line.startsWith('}')) {
-          isReadingEndpointMap = false;
-          break;
-        }
+        if (line.trim().startsWith('\'')) continue;
+        final segments = trimmedLine.split(':');
+        if (segments[1].isEmpty) segments[1] = (sourceLines[i + 1]);
 
-        final segments = trimmedLine.split(': ');
-        final rhsCommentStartIndex = segments[1].indexOf('//');
+        final endpointDescription = segments[1].trim();
+        final rhsCommentStartIndex = endpointDescription.indexOf('//');
 
         String _extractEndpointPath() {
-          var output = segments[1];
+          var output = endpointDescription;
           if (rhsCommentStartIndex != -1) {
             output = output.substring(0, rhsCommentStartIndex).trim();
           }
@@ -76,17 +81,19 @@ List<EndpointCategory> parseEndpoints(String endpointSourceFileContents) {
           return output;
         }
 
+        final notes = rhsCommentStartIndex == -1
+            ? null
+            : endpointDescription
+                .substring(rhsCommentStartIndex)
+                .trim()
+                .substring(2)
+                .trim();
+
         currentCategoryEndpoints.add(
           Endpoint(
             name: segments[0],
             path: _extractEndpointPath(),
-            notes: rhsCommentStartIndex == -1
-                ? null
-                : segments[1]
-                    .substring(rhsCommentStartIndex)
-                    .trim()
-                    .substring(2)
-                    .trim(),
+            notes: notes == 'cspell' ? null : notes,
           ),
         );
       }

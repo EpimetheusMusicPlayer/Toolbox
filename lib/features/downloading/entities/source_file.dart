@@ -17,7 +17,7 @@ abstract class SourceNode {
 
 /// A class representing a Pandora source file.
 class SourceFile extends SourceNode {
-  String contents;
+  String? contents;
 
   SourceFile(String path, this.contents) : super(path);
 

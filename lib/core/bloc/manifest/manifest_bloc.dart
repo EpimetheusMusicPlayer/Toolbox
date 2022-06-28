@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:bloc/bloc.dart';
 import 'package:http/http.dart';
 import 'package:meta/meta.dart';
@@ -14,22 +12,16 @@ class ManifestBloc extends Bloc<ManifestEvent, ManifestState> {
   final Client _client;
 
   ManifestBloc(this._client) : super(const ManifestLoading()) {
-    add(const ManifestLoadRequested());
-  }
-
-  @override
-  Stream<ManifestState> mapEventToState(
-    ManifestEvent event,
-  ) async* {
-    if (event is ManifestLoadRequested) {
-      yield const ManifestLoading();
+    on<ManifestLoadRequested>((event, emit) async {
+      emit(const ManifestLoading());
       try {
-        yield ManifestLoaded(await fetchManifest(_client));
+        emit(ManifestLoaded(await fetchManifest(_client)));
       } on ManifestNotFoundException {
-        yield const ManifestLoadError(ManifestLoadErrorType.notFound);
+        emit(const ManifestLoadError(ManifestLoadErrorType.notFound));
       } on DownloadingNetworkException {
-        yield const ManifestLoadError(ManifestLoadErrorType.network);
+        emit(const ManifestLoadError(ManifestLoadErrorType.network));
       }
-    }
+    });
+    add(const ManifestLoadRequested());
   }
 }

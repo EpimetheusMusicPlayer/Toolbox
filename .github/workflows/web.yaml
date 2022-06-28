@@ -21,7 +21,7 @@ jobs:
       - run: flutter pub get
 
       - name: Build web release
-        run: flutter build web --web-renderer canvaskit --no-sound-null-safety
+        run: flutter build web --web-renderer canvaskit
 
       - name: Publish web release
         run: |

@@ -14,6 +14,9 @@ class EndpointBloc extends Bloc<EndpointEvent, EndpointState> {
 
   EndpointBloc(Stream<File> sourceFileStream)
       : super(const EndpointState.empty()) {
+    on<EndpointSourcesLoaded>((event, emit) =>
+        emit(EndpointState(parseEndpoints(event.endpointSourceFileContents))));
+
     _sourceFileSubscription = sourceFileStream.listen((file) {
       if (file.path == endpointSourceFilePath) {
         add(EndpointSourcesLoaded(file.readAsStringSync()));
@@ -25,12 +28,5 @@ class EndpointBloc extends Bloc<EndpointEvent, EndpointState> {
   Future<void> close() {
     _sourceFileSubscription.cancel();
     return super.close();
-  }
-
-  @override
-  Stream<EndpointState> mapEventToState(EndpointEvent event) async* {
-    if (event is EndpointSourcesLoaded) {
-      yield EndpointState(parseEndpoints(event.endpointSourceFileContents));
-    }
   }
 }

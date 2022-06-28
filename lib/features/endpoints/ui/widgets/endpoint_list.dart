@@ -12,6 +12,7 @@ class EndpointList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
+      primary: false,
       children: [
         for (final category in endpointCategories)
           EndpointCategoryDisplay(category: category),

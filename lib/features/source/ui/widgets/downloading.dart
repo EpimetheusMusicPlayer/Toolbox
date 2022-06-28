@@ -84,7 +84,7 @@ class _SourceDownloadDialogState extends State<SourceDownloadDialog> {
       ),
       contentPadding: EdgeInsets.zero,
       actions: [
-        OutlineButton(
+        OutlinedButton(
           child: const Text('Cancel'),
           onPressed: () => Navigator.of(context).pop(null),
         ),

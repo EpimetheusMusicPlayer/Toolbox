@@ -63,7 +63,7 @@ Future<Manifest> fetchManifest(Client client) async {
 
     // Download manifest JavaScript.
     final manifestJs = parsejs(
-      (await downloadSources(client, Uri.parse(manifestUrl!)))![0].contents,
+      (await downloadSources(client, Uri.parse(manifestUrl!)))![0].contents!,
       handleNoise: false,
       annotations: false,
     );
@@ -72,7 +72,7 @@ Future<Manifest> fetchManifest(Client client) async {
     final manifestReturnExpression = ((((((manifestJs.body.singleWhere(
                         (statement) =>
                             statement is FunctionDeclaration &&
-                            statement.function.name.value == 'jsonpScriptSrc')
+                            statement.function.name!.value == 'jsonpScriptSrc')
                     as FunctionDeclaration)
                 .function
                 .body) as BlockStatement)

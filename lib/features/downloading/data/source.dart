@@ -28,7 +28,7 @@ Future<List<SourceFile>?> downloadSources(Client client, Uri jsUri) async {
       for (var i = 0; i < sourceMapping.urls.length; ++i)
         SourceFile(
           Uri.parse(sourceMapping.urls[i]).normalizePath().path,
-          sourceMapping.files[i]!.getText(0),
+          sourceMapping.files[i]?.getText(0),
         )
     ];
   } on SocketException {

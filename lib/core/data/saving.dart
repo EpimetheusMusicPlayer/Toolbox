@@ -2,10 +2,10 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pandora_toolbox/core/bloc/manifest/manifest_bloc.dart';
 import 'package:universal_html/html.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 String getFilenamePrefixFromManifest(BuildContext context) {
   final manifestState = BlocProvider.of<ManifestBloc>(context).state;
@@ -30,9 +30,10 @@ void saveFile(String name, String mime, List<int> bytes) {
     document.body!.children.remove(anchor);
     Url.revokeObjectUrl(blobUrl);
   } else {
-    // On other platforms, just open a base64 URI.
+    // On other platforms, just copy a base64 URI.
     // This is primarily a web app; this functionality exists to allow
     // debugging on other platforms.
-    launch('data:$mime;base64,${base64.encode(bytes)}', forceSafariVC: false);
+    Clipboard.setData(
+        ClipboardData(text: 'data:$mime;base64,${base64.encode(bytes)}'));
   }
 }

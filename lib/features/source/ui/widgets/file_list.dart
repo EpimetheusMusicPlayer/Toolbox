@@ -19,11 +19,13 @@ class FileListDisplay extends StatefulWidget {
 }
 
 class _FileListDisplayState extends State<FileListDisplay> {
+  late final ScrollController _controller;
   late final StreamSubscription<File> _subscription;
 
   @override
   void initState() {
     super.initState();
+    _controller = ScrollController();
     _subscription = widget.fileUpdatedStream.listen((file) {
       // Check if the new file is in a subdirectory of the selected directory.
       if (file.uri.normalizePath().path.contains(
@@ -46,6 +48,7 @@ class _FileListDisplayState extends State<FileListDisplay> {
   @override
   void dispose() {
     _subscription.cancel();
+    _controller.dispose();
     super.dispose();
   }
 
@@ -86,7 +89,9 @@ class _FileListDisplayState extends State<FileListDisplay> {
                     });
 
                   return Scrollbar(
+                    controller: _controller,
                     child: ListView.builder(
+                      controller: _controller,
                       itemCount: selectedDirectoryContents.length,
                       itemBuilder: (context, index) {
                         final entity = selectedDirectoryContents[index];

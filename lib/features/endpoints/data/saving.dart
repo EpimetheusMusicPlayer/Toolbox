@@ -68,7 +68,7 @@ String _encodeMarkdown(List<EndpointCategory> endpointCategories) {
   for (final category in endpointCategories) {
     buffer.writeln('### ${category.name ?? 'Uncategorized'}');
     buffer.writeln('|Name|Path|Notes|');
-    buffer.writeln('|-:|:-|:-|');
+    buffer.writeln('|---:|:---|:----|');
     for (final endpoint in category.endpoints) {
       buffer.writeln(
           '|${endpoint.name}|${endpoint.path}|${endpoint.notes ?? ''}|');

@@ -1,43 +1,40 @@
 name: pandora_toolbox
 description: A suite of Pandora inspection tools.
-homepage: 'https://toolbox.epimetheus.tk'
+homepage: https://toolbox.epimetheus.tk
 
 publish_to: 'none'
 
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.12.0-0 <3.0.0"
+  sdk: ">=2.17.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  provider: ^5.0.0-nullsafety.2
-  bloc: ^7.0.0-nullsafety.0
-  flutter_bloc: ^7.0.0-nullsafety.0
-  http:
-    git:
-      url: 'https://github.com/dart-lang/http'
-      ref: 'd473635f0dbb72936664696162127c2209986356'
+  provider: ^6.0.3
+  bloc: ^8.0.3
+  flutter_bloc: ^8.0.1
+  http: ^0.13.4
   batcher:
     git:
-      url: 'git://github.com/hacker1024/batcher.dart.git'
-      ref: '45a790db50e9772740084349905d0a97a06a9666'
-  universal_html: ^1.2.3
-  source_maps: ^0.10.10-nullsafety.3
-  jsparser: ^2.0.1
-  file: ^5.2.1 # Waiting on https://github.com/google/file.dart/issues/175
-  archive:
+      url: https://github.com/hacker1024/batcher.dart.git
+      ref: 45a790db50e9772740084349905d0a97a06a9666
+  universal_html: ^2.0.8
+  source_maps: ^0.10.10
+  jsparser:
     git:
-      url: 'https://github.com/brendan-duncan/archive'
-      ref: '2ea0307f401b4d762c31b5e344f4bd0d9e82bc7c'
-  url_launcher: ^6.0.0-nullsafety.1
-  flutter_highlight: ^0.6.0
-  flutter_markdown: ^0.5.2
-  flex_color_scheme: ^1.3.0
+      url: https://github.com/sym233/parsejs.dart.git
+      ref: 46effb0b7e118556cbfd3043f07c44ef934ee4a9
+  file: ^6.1.2 # Waiting on https://github.com/google/file.dart/issues/175
+  archive: ^3.3.0
+  url_launcher: ^6.1.4
+  flutter_highlight: ^0.7.0
+  flutter_markdown: ^0.6.10+2
+  flex_color_scheme: ^5.0.1
 
 dev_dependencies:
-  pedantic: 1.10.0-nullsafety.3
+  pedantic: ^1.11.1
 
 flutter:
   uses-material-design: true

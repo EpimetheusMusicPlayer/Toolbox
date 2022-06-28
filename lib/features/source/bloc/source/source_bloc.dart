@@ -27,7 +27,33 @@ class SourceBloc extends Bloc<SourceEvent, SourceState> {
 
   SourceBloc._(this._client, this._manifestBloc, this.sourceFs)
       : super(const SourceEmpty()) {
-    _manifestBlocSubscription = _manifestBloc.listen((state) {
+    on<SourceLoadRequested>((event, emit) async {
+      final totalModuleCount = event.manifest.moduleCount;
+      emit(SourceLoading(0, totalModuleCount));
+      await for (final sourceFileList in downloadManifestSources(
+        _client,
+        event.manifest,
+      )) {
+        for (final sourceFile in sourceFileList) {
+          try {
+            _fileUpdatedStreamController.add(
+              sourceFs.file(sourceFile.path)
+                ..createSync(recursive: true)
+                ..writeAsStringSync(
+                    sourceFile.contents ?? '// File contents unavailable.'),
+            );
+          } catch (e) {
+            print(e);
+            rethrow;
+          }
+        }
+        emit((SourceLoading(
+            (state as SourceLoading).loadedModuleCount + 1, totalModuleCount)));
+      }
+      emit(const SourceLoaded());
+    });
+
+    _manifestBlocSubscription = _manifestBloc.stream.listen((state) {
       if (state is ManifestLoaded) {
         add(SourceLoadRequested(state.manifest));
       }
@@ -41,35 +67,5 @@ class SourceBloc extends Bloc<SourceEvent, SourceState> {
   Future<void> close() {
     _manifestBlocSubscription.cancel();
     return super.close();
-  }
-
-  @override
-  Stream<SourceState> mapEventToState(
-    SourceEvent event,
-  ) async* {
-    if (event is SourceLoadRequested) {
-      final totalModuleCount = event.manifest.moduleCount;
-      yield SourceLoading(0, totalModuleCount);
-      await for (final sourceFileList in downloadManifestSources(
-        _client,
-        event.manifest,
-      )) {
-        for (final sourceFile in sourceFileList) {
-          try {
-            _fileUpdatedStreamController.add(
-              sourceFs.file(sourceFile.path)
-                ..createSync(recursive: true)
-                ..writeAsStringSync(sourceFile.contents),
-            );
-          } catch (e) {
-            print(e);
-            rethrow;
-          }
-        }
-        yield SourceLoading(
-            (state as SourceLoading).loadedModuleCount + 1, totalModuleCount);
-      }
-      yield const SourceLoaded();
-    }
   }
 }
